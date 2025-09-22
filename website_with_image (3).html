@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parking Slot Monitoring</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f6f9;
+        }
+        header {
+            background: #34495e;
+            color: #fff;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+        #dateTime {
+            font-size: 1rem;
+            font-weight: bold;
+        }
+        .image-container {
+            margin: 20px auto;
+            max-width: 90%;
+            text-align: center;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .parking-status {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .parking-slot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+        .available {
+            background: #d4edda;
+            color: #155724;
+        }
+        .occupied {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        footer {
+            background: #34495e;
+            color: #fff;
+            padding: 10px 0;
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+    <script>
+        function updateParkingSlots() {
+            const slots = [
+                {id: 1, status: 'available'},
+                {id: 2, status: 'occupied'},
+                {id: 3, status: 'occupied'},
+                {id: 4, status: 'available'},
+                {id: 5, status: 'occupied'},
+                {id: 6, status: 'available'},
+                {id: 7, status: 'available'},
+                {id: 8, status: 'occupied'}
+            ];
+
+            const container = document.getElementById("slotContainer");
+            container.innerHTML = "";
+
+            slots.forEach(slot => {
+                const div = document.createElement("div");
+                div.classList.add("parking-slot");
+                div.classList.add(slot.status === "available" ? "available" : "occupied");
+                div.innerHTML = `<span>Slot ${slot.id}</span><span>${slot.status.charAt(0).toUpperCase() + slot.status.slice(1)}</span>`;
+                container.appendChild(div);
+            });
+        }
+
+        function updateDateTime() {
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const dateString = now.toLocaleDateString(undefined, options);
+            const timeString = now.toLocaleTimeString();
+            document.getElementById("dateTime").textContent = `${dateString} | ${timeString}`;
+        }
+
+        window.onload = function() {
+            updateParkingSlots();
+            updateDateTime();
+            setInterval(updateDateTime, 1000);
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Parking Slot Monitoring System</h1>
+        <div id="dateTime"></div>
+    </header>
+
+    <div class="image-container">
+        <img src="551367384_1661501124786195_8931864341818199460_n.png" alt="Parking Area Layout">
+    </div>
+
+    <div class="parking-status">
+        <h2>Real-Time Parking Slot Status</h2>
+        <div id="slotContainer"></div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Parking Management System | All Rights Reserved</p>
+    </footer>
+</body>
+</html>
